@@ -13,7 +13,7 @@ from test_llm_request import ask_model
 
 from pathlib import Path
 
-prompt_path = Path("/home/s5803453/Desktop/MasterProject/prompts/box.md")
+prompt_path = Path("/home/s5803453/Desktop/MasterProject/prompts/exp04_copy_to_points_revision03.md")
 
 prompt = prompt_path.read_text(encoding="utf-8")
 
@@ -52,7 +52,7 @@ code = ask_model(prompt)
 # print("Raw code:")
 # print(code)
 
-# code = clean_code(code)
+code = clean_code(code)
 
 # print("Cleaned code:")
 # print(code)

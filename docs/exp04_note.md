@@ -4,37 +4,11 @@
 
 Evaluate whether Qwen2.5-Coder-7B can correctly generate a basic Copy to Points SOP network.
 
----
-
-## Prompt
-
-```text
-Generate only executable Houdini Python code.
-
-Do not use markdown code fences.
-Do not explain your solution.
-
-Create:
-- one geometry container under /obj
-
-Create the following SOP network:
-
-Grid
-↓
-
-Scatter
-↓
-
-Copy to Points
-
-Copy one Box SOP onto the scattered points.
-
-Layout the nodes.
-
-Output executable Python only.
-```
+Compare with Qwen3-8B
 
 ---
+
+
 
 ## Result
 
@@ -85,3 +59,7 @@ use clean_code() in houdini_run_llm.py
 - connect use pseudocode format
 ---
 
+## Qwen3-8B
+### Attempt 1 revision03 clean_code()
+- Success
+- completion tokens: 2328 vs 205 (Qwen2.5-Coder)

@@ -25,7 +25,7 @@ def ask_model(prompt: str) -> str:
                 "content": prompt,
             },
         ],
-        "temperature": 0.2,
+        "temperature": 0.1,
     }
 
     response = requests.post(API_URL, headers=headers, json=payload, timeout=120)

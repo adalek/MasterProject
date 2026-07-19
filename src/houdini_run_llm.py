@@ -3,7 +3,7 @@ import hou
 
 
 
-PROJECT_PYTHON_PATH = "/home/s5803453/Desktop/MasterProject/python"
+PROJECT_PYTHON_PATH = "/home/s5803453/Desktop/MasterProject/src"
 
 if PROJECT_PYTHON_PATH not in sys.path:
     sys.path.append(PROJECT_PYTHON_PATH)

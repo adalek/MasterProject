@@ -20,6 +20,8 @@ Then set:
 copytopoints.setDisplayFlag(True)
 copytopoints.setRenderFlag(True)
 
+
+
 Layout the nodes.
 
 Output executable Python only.

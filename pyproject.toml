@@ -1,0 +1,9 @@
+[project]
+name = "masterproject"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "chromadb>=1.5.9",
+    "requests>=2.34.2",
+    "sentence-transformers>=5.6.0",
+]

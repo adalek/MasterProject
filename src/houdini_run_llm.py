@@ -13,7 +13,7 @@ from test_llm_request import ask_model
 
 from pathlib import Path
 
-prompt_path = Path("/home/s5803453/Desktop/MasterProject/prompts/exp04_copy_to_points_revision03.md")
+prompt_path = Path("/home/s5803453/Desktop/MasterProject/prompts/exp01_box.md")
 
 prompt = prompt_path.read_text(encoding="utf-8")
 

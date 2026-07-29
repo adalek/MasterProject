@@ -1,67 +1,33 @@
 import sys
+from pathlib import Path
+
 import hou
 
 
+PROJECT_ROOT = Path("/home/s5803453/Desktop/MasterProject")
 
-PROJECT_PYTHON_PATH = "/home/s5803453/Desktop/MasterProject/src"
-
-if PROJECT_PYTHON_PATH not in sys.path:
-    sys.path.append(PROJECT_PYTHON_PATH)
-
-from test_llm_request import ask_model
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 
-from pathlib import Path
-
-prompt_path = Path("/home/s5803453/Desktop/MasterProject/prompts/exp01_box.md")
-
-prompt = prompt_path.read_text(encoding="utf-8")
+from src.generate import generate
 
 
-def clean_code(text: str) -> str:
-    text = text.strip()
+PROMPT_PATH = PROJECT_ROOT / "prompts" / "exp01_box.md"
 
-    if text.startswith("```python"):
-        text = text[len("```python"):].strip()
-    elif text.startswith("```"):
-        text = text[len("```"):].strip()
+prompt = PROMPT_PATH.read_text(encoding="utf-8")
 
-    if text.endswith("```"):
-        text = text[:-3].strip()
-
-    return text
+code = generate(prompt)
 
 
-# prompt = """
-# Generate only executable Houdini Python code.
-# Do not use markdown code fences.
-
-# Create:
-# - one geometry container under /obj
-# - one box SOP inside it
-# - layout the SOP nodes
-
-# Rules:
-# - Do not call setNextInput on the geometry container.
-# - Only connect SOP nodes inside the geometry container.
-# - Use layoutChildren().
-# """
-
-code = ask_model(prompt)
-
-# print("Raw code:")
-# print(code)
-
-code = clean_code(code)
-
-# print("Cleaned code:")
-# print(code)
-
-# exec(code, {"hou": hou})
-# 
-blocked_words = ["subprocess", "os.system", "shutil", "deleteItems"]
+blocked_words = [
+    "subprocess",
+    "os.system",
+    "shutil",
+    "deleteItems",
+]
 
 if any(word in code for word in blocked_words):
-    print("Blocked unsafe code")
-else:
-    exec(code, {"hou": hou})
+    raise RuntimeError("Blocked unsafe generated code.")
+
+exec(code, {"hou": hou})

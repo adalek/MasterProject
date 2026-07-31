@@ -2,7 +2,8 @@ from rag.prompt_builder import build_prompt
 from rag.retrieve import retrieve
 
 # 按你当前文件中的实际位置修改这个 import
-from src.test_llm_request import ask_model
+from src.ask_model import ask_model
+from src.clean_code import clean_code
 
 
 def generate_with_rag(
@@ -22,8 +23,16 @@ def generate_with_rag(
             if document.distance is not None
             else f"- {document.source}"
         )
+    
+    raw_response = ask_model(final_prompt)
+    code = clean_code(raw_response)
 
-    return ask_model(final_prompt)
+    if not code:
+        raise ValueError(
+            "The model response was empty after cleaning."
+        )
+
+    return code
 
 
 def main() -> None:

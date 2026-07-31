@@ -152,21 +152,13 @@ for (int i = 0; i < num_steps; i++) {{
 
 
 # ========== 执行 ==========
-if __name__ == "__main__":
-    # 检查是否已存在同名节点，避免重复创建
-    existing = hou.node("/obj/staircase")
-    if existing:
-        answer = hou.ui.displayMessage(
-            "节点 /obj/staircase 已存在。\n是否覆盖？",
-            buttons=("覆盖", "取消"),
-            severity=hou.severityType.Warning
-        )
-        if answer == 0:
-            existing.destroy()
-        else:
-            raise hou.Error("用户取消")
+# Execute immediately inside Houdini.
+existing = hou.node("/obj/staircase")
 
-    create_procedural_staircase()
+if existing:
+    existing.destroy()
+
+create_procedural_staircase()
 
 
 ## Common mistakes

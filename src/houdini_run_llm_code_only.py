@@ -13,7 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.generate import generate
 
 
-PROMPT_PATH = PROJECT_ROOT / "prompts" / "exp05_staircase.md"
+PROMPT_PATH = PROJECT_ROOT / "prompts" / "exp08_staircase.md"
 
 prompt = PROMPT_PATH.read_text(encoding="utf-8")
 

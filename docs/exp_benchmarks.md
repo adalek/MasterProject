@@ -25,3 +25,7 @@ RAG:
   Finish reason: stop
   Execution: PASS
   Geometry: PASS
+  
+10 deepseek retrived spiral_core.md succeed
+10 local failed cannot generate full nodes
+11 local succeed, retrive scifi_stairs_simple_rag.md

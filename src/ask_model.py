@@ -43,6 +43,7 @@ def request_chat_completion(
             },
         ],
         "temperature": temperature,
+        "max_tokens": 6000,
         "stream": False,
     }
 

@@ -4,6 +4,20 @@
 
 Create a procedural staircase in Houdini using repeated geometry.
 
+## Knowledge type
+
+Type: Example
+Asset: Staircase
+Variant: Straight Basic
+
+## Key concepts
+
+- straight staircase
+- linear repetition
+- box
+- Copy to Points
+- repeated steps
+
 ## Relevant user requests
 
 - Create a staircase.

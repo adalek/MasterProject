@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(
 PROMPT_PATH = (
     PROJECT_ROOT
     / "prompts"
-    / "exp06_staircase.md"
+    / "exp11_staircase.md"
 )
 
 RAG_SERVER_URL = "http://127.0.0.1:8000/generate"

@@ -12,3 +12,16 @@ RAG:
 07 Failed
 08 \
 09 Failed
+06 with procedural_staircase_full.md, local failed, houdini quit, computer shut down
+
+06 with procedural_staircase_full.md, deepseek succeed:
+  Baseline: Full Example RAG
+  Source: examples/full/procedural_spiral_staircase_full.md
+  
+  Model: DeepSeek
+  Prompt tokens: 8592
+  Completion tokens: 9566
+  Total tokens: 18158
+  Finish reason: stop
+  Execution: PASS
+  Geometry: PASS

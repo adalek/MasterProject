@@ -9,6 +9,7 @@ from src.clean_code import clean_code
 def generate_with_rag(
     user_prompt: str,
     top_k: int = 1,
+    provider: str | None = None,
 ) -> str:
     """Retrieve Houdini references and generate Houdini Python code."""
 
@@ -24,7 +25,7 @@ def generate_with_rag(
             else f"- {document.source}"
         )
     
-    raw_response = ask_model(final_prompt)
+    raw_response = ask_model(final_prompt, provider=provider)
     code = clean_code(raw_response)
 
     if not code:
@@ -32,7 +33,7 @@ def generate_with_rag(
             "The model response was empty after cleaning."
         )
 
-    return code
+    return code, documents
 
 
 def main() -> None:

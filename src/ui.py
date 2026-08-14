@@ -33,12 +33,26 @@ class HoudiniAIAgentWindow(QtWidgets.QWidget):
             "DeepSeek",
         ])
         layout.addWidget(self.model_combo)
+        
+
 
         # RAG
         self.rag_checkbox = QtWidgets.QCheckBox("Enable RAG")
         self.rag_checkbox.setChecked(True)
         layout.addWidget(self.rag_checkbox)
 
+        # Retrieval
+        layout.addWidget(QtWidgets.QLabel("Retrieved Knowledge"))
+        
+        self.retrieved_output = QtWidgets.QPlainTextEdit()
+        self.retrieved_output.setReadOnly(True)
+        self.retrieved_output.setMaximumHeight(80)
+        self.retrieved_output.setPlaceholderText(
+            "Retrieved knowledge will appear here..."
+        )
+        
+        layout.addWidget(self.retrieved_output)
+        
         # Generate
         self.generate_button = QtWidgets.QPushButton("Generate")
         layout.addWidget(self.generate_button)
@@ -70,7 +84,19 @@ class HoudiniAIAgentWindow(QtWidgets.QWidget):
                 "Status: Please enter a prompt"
             )
             return
-    
+        
+        #get provider name from GUI
+        model_text = self.model_combo.currentText()
+        
+        provider_map = {
+            "Local Qwen": "local",
+            "DeepSeek": "deepseek",
+        }
+        
+        provider = provider_map[model_text]
+        
+        rag_enabled = self.rag_checkbox.isChecked()
+        
         self.status_label.setText(
             "Status: Generating..."
         )
@@ -78,6 +104,8 @@ class HoudiniAIAgentWindow(QtWidgets.QWidget):
         payload = {
             "prompt": prompt,
             "top_k": 1,
+            "provider": provider,
+            "rag_enabled": rag_enabled,
         }
     
         try:
@@ -93,14 +121,42 @@ class HoudiniAIAgentWindow(QtWidgets.QWidget):
             code = data["code"]
     
             self.code_output.setPlainText(code)
+            
+            # Retrieval data
+            retrieved_sources = data.get(
+                "retrieved_sources",
+                [],
+            )
+            
+            retrieved_lines = []
+            
+            for item in retrieved_sources:
+                source = item["source"]
+                distance = item["distance"]
+            
+                if distance is None:
+                    retrieved_lines.append(source)
+                else:
+                    retrieved_lines.append(
+                        f"{source} — distance: {distance:.4f}"
+                    )
+            
+            self.retrieved_output.setPlainText(
+                "\n".join(retrieved_lines)
+            )
     
             self.status_label.setText(
                 "Status: Generation complete"
             )
     
         except requests.RequestException as error:
+            print("Request failed:")
             print(error)
-    
+        
+            if error.response is not None:
+                print("Server response:")
+                print(error.response.text)
+        
             self.status_label.setText(
                 "Status: Server request failed"
             )

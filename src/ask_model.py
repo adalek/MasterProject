@@ -43,7 +43,7 @@ def request_chat_completion(
             },
         ],
         "temperature": temperature,
-        "max_tokens": 10000,
+        "max_tokens": 6000,
         "stream": False,
     }
 
@@ -124,18 +124,26 @@ def ask_deepseek_model(prompt: str) -> str:
     )
 
 
-def ask_model(prompt: str) -> str:
-    """Select the configured model provider and return its response."""
+def ask_model(
+    prompt: str,
+    provider: str | None = None,
+) -> str:
+    """Select a model provider and return its response."""
 
     prompt = prompt.strip()
 
     if not prompt:
         raise ValueError("prompt cannot be empty.")
 
-    provider = os.getenv(
-        "MODEL_PROVIDER",
-        "local",
-    ).lower()
+    if provider is None:
+        provider = os.getenv(
+            "MODEL_PROVIDER",
+            "local",
+        )
+
+    provider = provider.lower().strip()
+
+    print(f"Model provider: {provider}")
 
     if provider == "local":
         return ask_local_model(prompt)
@@ -144,5 +152,5 @@ def ask_model(prompt: str) -> str:
         return ask_deepseek_model(prompt)
 
     raise ValueError(
-        f"Unsupported MODEL_PROVIDER: {provider}"
+        f"Unsupported model provider: {provider}"
     )

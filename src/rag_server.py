@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
+from src.generate import generate
 from src.generate_with_rag import generate_with_rag
 
 
@@ -13,10 +14,18 @@ app = FastAPI(
 class GenerateRequest(BaseModel):
     prompt: str = Field(min_length=1)
     top_k: int = Field(default=1, ge=1, le=10)
+    provider: str = Field(default="local")
+    rag_enabled: bool = True
+
+
+class RetrievedSource(BaseModel):
+    source: str
+    distance: float | None
 
 
 class GenerateResponse(BaseModel):
     code: str
+    retrieved_sources: list[RetrievedSource]
 
 
 @app.get("/health")
@@ -28,18 +37,37 @@ def health_check() -> dict[str, str]:
 
 @app.post("/generate", response_model=GenerateResponse)
 def generate_code(request: GenerateRequest) -> GenerateResponse:
-    """Retrieve Houdini knowledge and generate executable Python code."""
+    """Generate executable Houdini Python code."""
 
     try:
-        code = generate_with_rag(
-            user_prompt=request.prompt,
-            top_k=request.top_k,
-        )
+        if request.rag_enabled:
+            code, documents = generate_with_rag(
+                user_prompt=request.prompt,
+                top_k=request.top_k,
+                provider=request.provider,
+            )
+
+        else:
+            code = generate(
+                user_prompt=request.prompt,
+                provider=request.provider,
+            )
+
+            documents = []
 
         if not code.strip():
             raise RuntimeError("The model returned empty code.")
 
-        return GenerateResponse(code=code)
+        return GenerateResponse(
+            code=code,
+            retrieved_sources=[
+                RetrievedSource(
+                    source=document.source,
+                    distance=document.distance,
+                )
+                for document in documents
+            ],
+        )
 
     except Exception as error:
         raise HTTPException(

@@ -2,7 +2,10 @@ from src.ask_model import ask_model
 from src.clean_code import clean_code
 
 
-def generate(user_prompt: str) -> str:
+def generate(
+    user_prompt: str,
+    provider: str | None = None,
+) -> str:
     """
     Generate executable Houdini Python code without RAG.
 
@@ -10,14 +13,13 @@ def generate(user_prompt: str) -> str:
         user_prompt:
             The original Houdini task description.
 
+        provider:
+            Model provider, for example "local" or "deepseek".
+            If None, ask_model() falls back to MODEL_PROVIDER
+            from the environment.
+
     Returns:
         Cleaned Houdini Python code.
-
-    Raises:
-        ValueError:
-            If the prompt is empty or the model returns empty content.
-        RuntimeError:
-            If code generation fails.
     """
 
     user_prompt = user_prompt.strip()
@@ -26,14 +28,19 @@ def generate(user_prompt: str) -> str:
         raise ValueError("user_prompt cannot be empty.")
 
     try:
-        raw_response = ask_model(user_prompt)
+        raw_response = ask_model(
+            user_prompt,
+            provider=provider,
+        )
     except Exception as error:
         raise RuntimeError(
             f"Failed to request code from the model: {error}"
         ) from error
 
     if not raw_response or not raw_response.strip():
-        raise ValueError("The model returned an empty response.")
+        raise ValueError(
+            "The model returned an empty response."
+        )
 
     generated_code = clean_code(raw_response)
 

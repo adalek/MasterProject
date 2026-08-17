@@ -1,3 +1,9 @@
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: Integrate GUI-selected model provider with RAG and non-RAG generation.
+# Use: Modification of the generation pipeline to propagate the selected provider.
+
 from src.ask_model import ask_model
 from src.clean_code import clean_code
 

@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: unknown
+# Use: Initial implementation of HTTP communication with the local llama.cpp
+# OpenAI-compatible API, JSON response parsing, and model-output extraction.
+
 import json
 import requests
 

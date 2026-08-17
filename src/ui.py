@@ -1,3 +1,9 @@
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: Connect GUI model selection and RAG controls to the FastAPI generation endpoint.
+# Use: Implementation and debugging assistance for GUI request construction and error handling.
+
 from PySide6 import QtCore, QtWidgets
 import hou
 import requests

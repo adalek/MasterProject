@@ -1,3 +1,16 @@
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: unknown
+# Use: Initial implementation, later refactored, of OpenAI-compatible HTTP
+# requests, JSON response parsing, and model-output extraction.
+
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: Existing ask_model.py provided for adding runtime model selection.
+# Use: Modification of model-provider routing for Local Qwen and DeepSeek.
+
 import json
 import os
 

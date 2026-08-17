@@ -1,3 +1,16 @@
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: "我现在的文件是houdini_run_llm.py, 这些prompt 单独建立md文件吗，怎么读取"
+# Use: Modification of prompt organization to load prompts from separate
+# Markdown files with pathlib.
+
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: 2026-07-03
+# Prompt: "我现在有test_llm_request.py文件，里面有ask_modelfunction，现在我想要在Houdini中能够直接获取并执行返回的python代码，该怎么做"
+# Use: Initial design of executing generated Houdini Python with exec().
+
 import json
 import sys
 from pathlib import Path

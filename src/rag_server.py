@@ -1,3 +1,15 @@
+# AI-assisted implementation.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: GUI/server integration, model-provider selection, and RAG on/off routing.
+# Use: Modification and debugging assistance for the FastAPI generation endpoint.
+
+# AI-assisted architecture/design.
+# Tool: OpenAI ChatGPT
+# Date: unknown
+# Prompt: Houdini GUI to FastAPI generation flow with provider and RAG selection.
+# Use: Design of the MVP integration boundary and server-side generation routing.
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
